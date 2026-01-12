@@ -1,0 +1,126 @@
+.data-table {
+  background: white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.data-table__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table__table thead {
+  background: #f7fafc;
+}
+
+.data-table__table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.data-table__sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+  position: relative;
+  padding-right: 2rem;
+}
+
+.data-table__sortable:hover {
+  background: #edf2f7;
+}
+
+.data-table__sort-indicator {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #667eea;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.data-table__actions-header {
+  text-align: center;
+  width: 120px;
+}
+
+.data-table__table tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+  transition: background 0.2s;
+}
+
+.data-table__table tbody tr:hover {
+  background: #f7fafc;
+}
+
+.data-table__table td {
+  padding: 1rem;
+  color: #4a5568;
+  font-size: 0.875rem;
+}
+
+.data-table__actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.data-table__action {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 1.25rem;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.data-table__action:hover {
+  background: #edf2f7;
+}
+
+.data-table__action--delete:hover {
+  background: #fed7d7;
+}
+
+.data-table__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  color: #718096;
+}
+
+.data-table__spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e2e8f0;
+  border-top-color: #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.data-table__empty {
+  padding: 3rem;
+  text-align: center;
+  color: #718096;
+}

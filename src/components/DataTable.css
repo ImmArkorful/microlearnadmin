@@ -124,3 +124,34 @@
   text-align: center;
   color: #718096;
 }
+
+.data-table__wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  .data-table {
+    border-radius: 0;
+  }
+
+  .data-table__table {
+    min-width: 600px;
+  }
+
+  .data-table__table th,
+  .data-table__table td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .data-table__actions {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .data-table__action {
+    padding: 0.375rem;
+    font-size: 1rem;
+  }
+}

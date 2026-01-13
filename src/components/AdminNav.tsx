@@ -2,7 +2,12 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '../context/AdminAuthContext';
 import './AdminNav.css';
 
-export function AdminNav() {
+interface AdminNavProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+export function AdminNav({ isOpen = false, onClose }: AdminNavProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const { admin, logout } = useAdminAuth();
@@ -10,6 +15,12 @@ export function AdminNav() {
   const handleLogout = () => {
     logout();
     navigate('/login');
+  };
+
+  const handleLinkClick = () => {
+    if (onClose) {
+      onClose();
+    }
   };
 
   const navItems = [
@@ -22,9 +33,16 @@ export function AdminNav() {
   ];
 
   return (
-    <nav className="admin-nav">
+    <nav className={`admin-nav ${isOpen ? 'admin-nav--open' : ''}`}>
       <div className="admin-nav__header">
         <h1 className="admin-nav__title">Admin Panel</h1>
+        <button 
+          className="admin-nav__close"
+          onClick={onClose}
+          aria-label="Close menu"
+        >
+          ✕
+        </button>
       </div>
 
       <ul className="admin-nav__list">
@@ -33,6 +51,7 @@ export function AdminNav() {
             <Link
               to={item.path}
               className={`admin-nav__link ${location.pathname === item.path ? 'admin-nav__link--active' : ''}`}
+              onClick={handleLinkClick}
             >
               <span className="admin-nav__icon">{item.icon}</span>
               <span className="admin-nav__label">{item.label}</span>

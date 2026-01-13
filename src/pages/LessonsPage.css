@@ -166,3 +166,45 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+@media (max-width: 768px) {
+  .lessons-page {
+    padding: 1rem;
+  }
+
+  .lessons-page__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .lessons-page__title {
+    font-size: 1.5rem;
+  }
+
+  .lessons-page__header-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .lessons-page__filters {
+    flex-direction: column;
+  }
+
+  .lessons-page__search,
+  .lessons-page__filter {
+    width: 100%;
+  }
+
+  .lessons-page__create-button,
+  .lessons-page__batch-delete-button {
+    width: 100%;
+    font-size: 0.875rem;
+    padding: 0.625rem 1rem;
+  }
+
+  .lessons-page__modal-content {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+}

@@ -110,89 +110,91 @@ export function DataTable<T extends { id: number }>({
 
   return (
     <div className="data-table">
-      <table className="data-table__table">
-        <thead>
-          <tr>
-            {columns.map((column) => (
-              <th
-                key={String(column.key)}
-                className={column.sortable ? 'data-table__sortable' : ''}
-                onClick={() => handleSort(column)}
-              >
-                {column.label}
-                {column.sortable && sortColumn === column.key && (
-                  <span className="data-table__sort-indicator">
-                    {sortDirection === 'asc' ? '↑' : '↓'}
-                  </span>
-                )}
-              </th>
-            ))}
-            {(onView || onEdit || onDelete || actions.length > 0) && (
-              <th className="data-table__actions-header">Actions</th>
-            )}
-          </tr>
-        </thead>
-        <tbody>
-          {sortedData.map((row) => (
-            <tr key={row.id}>
+      <div className="data-table__wrapper">
+        <table className="data-table__table">
+          <thead>
+            <tr>
               {columns.map((column) => (
-                <td key={String(column.key)}>
-                  {column.render
-                    ? column.render(
-                        typeof column.key === 'string' ? (row as any)[column.key] : row[column.key as keyof T],
-                        row
-                      )
-                    : String(typeof column.key === 'string' ? (row as any)[column.key] : row[column.key as keyof T] || '')}
-                </td>
+                <th
+                  key={String(column.key)}
+                  className={column.sortable ? 'data-table__sortable' : ''}
+                  onClick={() => handleSort(column)}
+                >
+                  {column.label}
+                  {column.sortable && sortColumn === column.key && (
+                    <span className="data-table__sort-indicator">
+                      {sortDirection === 'asc' ? '↑' : '↓'}
+                    </span>
+                  )}
+                </th>
               ))}
               {(onView || onEdit || onDelete || actions.length > 0) && (
-                <td className="data-table__actions">
-                  {onView && (
-                    <button
-                      className="data-table__action data-table__action--view"
-                      onClick={() => onView(row)}
-                      title="View"
-                    >
-                      👁️
-                    </button>
-                  )}
-                  {onEdit && (
-                    <button
-                      className="data-table__action data-table__action--edit"
-                      onClick={() => onEdit(row)}
-                      title="Edit"
-                    >
-                      ✏️
-                    </button>
-                  )}
-                  {onDelete && (
-                    <button
-                      className="data-table__action data-table__action--delete"
-                      onClick={() => onDelete(row)}
-                      title="Delete"
-                    >
-                      🗑️
-                    </button>
-                  )}
-                  {actions.map((action, index) => {
-                    const labelText = typeof action.label === 'string' ? action.label : action.label(row);
-                    return (
-                      <button
-                        key={index}
-                        className={`data-table__action ${action.className || ''}`}
-                        onClick={() => action.onClick(row)}
-                        title={labelText}
-                      >
-                        {labelText}
-                      </button>
-                    );
-                  })}
-                </td>
+                <th className="data-table__actions-header">Actions</th>
               )}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {sortedData.map((row) => (
+              <tr key={row.id}>
+                {columns.map((column) => (
+                  <td key={String(column.key)}>
+                    {column.render
+                      ? column.render(
+                          typeof column.key === 'string' ? (row as any)[column.key] : row[column.key as keyof T],
+                          row
+                        )
+                      : String(typeof column.key === 'string' ? (row as any)[column.key] : row[column.key as keyof T] || '')}
+                  </td>
+                ))}
+                {(onView || onEdit || onDelete || actions.length > 0) && (
+                  <td className="data-table__actions">
+                    {onView && (
+                      <button
+                        className="data-table__action data-table__action--view"
+                        onClick={() => onView(row)}
+                        title="View"
+                      >
+                        👁️
+                      </button>
+                    )}
+                    {onEdit && (
+                      <button
+                        className="data-table__action data-table__action--edit"
+                        onClick={() => onEdit(row)}
+                        title="Edit"
+                      >
+                        ✏️
+                      </button>
+                    )}
+                    {onDelete && (
+                      <button
+                        className="data-table__action data-table__action--delete"
+                        onClick={() => onDelete(row)}
+                        title="Delete"
+                      >
+                        🗑️
+                      </button>
+                    )}
+                    {actions.map((action, index) => {
+                      const labelText = typeof action.label === 'string' ? action.label : action.label(row);
+                      return (
+                        <button
+                          key={index}
+                          className={`data-table__action ${action.className || ''}`}
+                          onClick={() => action.onClick(row)}
+                          title={labelText}
+                        >
+                          {labelText}
+                        </button>
+                      );
+                    })}
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

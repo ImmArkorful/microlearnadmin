@@ -194,3 +194,45 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+@media (max-width: 768px) {
+  .quizzes-page {
+    padding: 1rem;
+  }
+
+  .quizzes-page__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .quizzes-page__title {
+    font-size: 1.5rem;
+  }
+
+  .quizzes-page__header-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .quizzes-page__filters {
+    flex-direction: column;
+  }
+
+  .quizzes-page__search,
+  .quizzes-page__filter {
+    width: 100%;
+  }
+
+  .quizzes-page__create-button,
+  .quizzes-page__batch-delete-button {
+    width: 100%;
+    font-size: 0.875rem;
+    padding: 0.625rem 1rem;
+  }
+
+  .quizzes-page__modal-content {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+}

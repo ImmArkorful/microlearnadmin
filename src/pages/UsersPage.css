@@ -180,3 +180,45 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+@media (max-width: 768px) {
+  .users-page {
+    padding: 1rem;
+  }
+
+  .users-page__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .users-page__title {
+    font-size: 1.5rem;
+  }
+
+  .users-page__header-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .users-page__filters {
+    flex-direction: column;
+  }
+
+  .users-page__search,
+  .users-page__filter {
+    width: 100%;
+  }
+
+  .users-page__create-button,
+  .users-page__batch-delete-button {
+    width: 100%;
+    font-size: 0.875rem;
+    padding: 0.625rem 1rem;
+  }
+
+  .users-page__modal-content {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+}

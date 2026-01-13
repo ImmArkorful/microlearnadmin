@@ -47,10 +47,28 @@ export function TopicGenerationPage() {
     current: string | null;
     status: 'generating' | 'completed';
   } | null>(null);
+  const [categoryCounts, setCategoryCounts] = useState<Array<{ category: string; count: string }>>([]);
   const progressIdRef = useRef<string | null>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const previewProgressIdRef = useRef<string | null>(null);
   const previewProgressIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Fetch category counts on mount
+  useEffect(() => {
+    const fetchCategoryCounts = async () => {
+      try {
+        const stats = await adminService.getStats();
+        if (stats.lessons?.byCategory) {
+          // Sort by count descending
+          const sorted = [...stats.lessons.byCategory].sort((a, b) => parseInt(b.count) - parseInt(a.count));
+          setCategoryCounts(sorted);
+        }
+      } catch (err) {
+        console.error('Failed to fetch category counts:', err);
+      }
+    };
+    fetchCategoryCounts();
+  }, []);
 
   // Poll for preview progress updates
   useEffect(() => {
@@ -258,11 +276,19 @@ export function TopicGenerationPage() {
             disabled={previewLoading || generating}
           >
             <option value="">Random Categories</option>
-            {CATEGORIES.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
+            {categoryCounts.length > 0 ? (
+              categoryCounts.map((item) => (
+                <option key={item.category} value={item.category}>
+                  {item.category}
+                </option>
+              ))
+            ) : (
+              CATEGORIES.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))
+            )}
           </select>
           <span className="topic-generation-page__hint">
             Leave empty to generate topics in random categories

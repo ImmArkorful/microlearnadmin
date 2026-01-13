@@ -107,3 +107,27 @@
 .dashboard__error {
   color: #f56565;
 }
+
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 1rem;
+  }
+
+  .dashboard__title {
+    font-size: 1.5rem;
+  }
+
+  .dashboard__stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .dashboard__sections {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .dashboard__section {
+    padding: 1rem;
+  }
+}

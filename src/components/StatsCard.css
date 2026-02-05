@@ -1,14 +1,15 @@
 .stats-card {
-  background: white;
-  border-radius: 0.5rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f9fbff 100%);
+  border-radius: 0.9rem;
   padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .stats-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
 }
 
 .stats-card__header {
@@ -19,11 +20,11 @@
 }
 
 .stats-card__title {
-  font-size: 0.875rem;
+  font-size: 0.78rem;
   font-weight: 500;
-  color: #718096;
+  color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   margin: 0;
 }
 
@@ -33,14 +34,14 @@
 
 .stats-card__value {
   font-size: 2rem;
-  font-weight: 700;
-  color: #2d3748;
+  font-weight: 800;
+  color: var(--text);
   margin-bottom: 0.5rem;
 }
 
 .stats-card__subtitle {
   font-size: 0.875rem;
-  color: #a0aec0;
+  color: var(--text-muted);
   margin: 0;
 }
 
@@ -51,9 +52,9 @@
 }
 
 .stats-card__trend--positive {
-  color: #48bb78;
+  color: var(--success);
 }
 
 .stats-card__trend--negative {
-  color: #f56565;
+  color: var(--danger);
 }

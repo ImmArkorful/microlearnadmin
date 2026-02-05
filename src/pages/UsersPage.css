@@ -17,17 +17,17 @@
 
 .users-page__batch-delete-button {
   padding: 0.75rem 1.5rem;
-  background: #f56565;
+  background: var(--danger);
   color: white;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 0.7rem;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
 }
 
 .users-page__batch-delete-button:hover {
-  background: #e53e3e;
+  background: var(--danger-strong);
 }
 
 .users-page__table-container {
@@ -36,9 +36,9 @@
 
 .users-page__table-header {
   padding: 0.75rem;
-  background: #f7fafc;
-  border-radius: 0.5rem 0.5rem 0 0;
-  border: 1px solid #e2e8f0;
+  background: #f6f8fd;
+  border-radius: 0.9rem 0.9rem 0 0;
+  border: 1px solid var(--border);
   border-bottom: none;
 }
 
@@ -59,24 +59,24 @@
 
 .users-page__title {
   font-size: 2rem;
-  font-weight: 700;
-  color: #2d3748;
+  font-weight: 800;
+  color: var(--text);
   margin: 0;
 }
 
 .users-page__create-button {
   padding: 0.75rem 1.5rem;
-  background: #667eea;
+  background: var(--primary);
   color: white;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 0.7rem;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
 }
 
 .users-page__create-button:hover {
-  background: #5568d3;
+  background: var(--primary-strong);
 }
 
 .users-page__filters {
@@ -88,23 +88,25 @@
 .users-page__search {
   flex: 1;
   padding: 0.75rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.7rem;
   font-size: 1rem;
+  background: #fff;
 }
 
 .users-page__filter {
   padding: 0.75rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.7rem;
   font-size: 1rem;
+  background: #fff;
 }
 
 .users-page__error {
-  background: #fed7d7;
-  color: #c53030;
+  background: #fee2e2;
+  color: #b4232a;
   padding: 0.75rem;
-  border-radius: 0.5rem;
+  border-radius: 0.7rem;
   margin-bottom: 1rem;
 }
 
@@ -114,7 +116,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(7, 15, 34, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -122,8 +124,8 @@
 }
 
 .users-page__modal-content {
-  background: white;
-  border-radius: 0.5rem;
+  background: #fff;
+  border-radius: 0.9rem;
   padding: 2rem;
   max-width: 500px;
   width: 90%;
@@ -133,7 +135,7 @@
 
 .users-page__modal-content h2 {
   margin: 0 0 1.5rem;
-  color: #2d3748;
+  color: var(--text);
 }
 
 .users-page__role {
@@ -164,16 +166,16 @@
 
 .users-page__pagination button {
   padding: 0.5rem 1rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border);
   background: white;
-  border-radius: 0.5rem;
+  border-radius: 0.65rem;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .users-page__pagination button:hover:not(:disabled) {
-  background: #f7fafc;
-  border-color: #cbd5e0;
+  background: #f7f9ff;
+  border-color: #cfdbf1;
 }
 
 .users-page__pagination button:disabled {

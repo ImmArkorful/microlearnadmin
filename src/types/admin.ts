@@ -84,6 +84,60 @@ export interface DashboardStats {
   }>;
 }
 
+export interface QualityQueueTopic {
+  id: number;
+  topic: string;
+  category: string;
+  created_at?: string;
+  overall_quality_score?: number | null;
+  factual_accuracy_score?: number | null;
+  total_flags?: number;
+  accuracy_flags?: number;
+  clarity_flags?: number;
+  last_flagged_at?: string;
+}
+
+export interface QualityQueueResponse {
+  lowQualityTopics: QualityQueueTopic[];
+  userFlaggedTopics: QualityQueueTopic[];
+}
+
+export interface FunnelResponse {
+  timeframe_days: number | null;
+  funnel: {
+    signups: number;
+    onboarding_completed: number;
+    first_lesson_started: number;
+    first_quiz_completed: number;
+  };
+  conversion_rates: {
+    onboarding_from_signup_pct: number;
+    first_lesson_from_signup_pct: number;
+    first_quiz_from_signup_pct: number;
+  };
+}
+
+export interface AiObservabilitySummary {
+  total_calls: number;
+  successful_calls: number;
+  failed_calls: number;
+  avg_latency_ms: number | null;
+}
+
+export interface AiObservabilityByEndpoint {
+  endpoint: string;
+  model: string | null;
+  total_calls: number;
+  failed_calls: number;
+  avg_latency_ms: number | null;
+}
+
+export interface AiObservabilityResponse {
+  timeframe_days: number | null;
+  summary: AiObservabilitySummary;
+  by_endpoint: AiObservabilityByEndpoint[];
+}
+
 export interface PaginatedResponse<T> {
   users?: T[];
   lessons?: T[];

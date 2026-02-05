@@ -1,16 +1,16 @@
 .admin-layout {
   display: flex;
   min-height: 100vh;
-  background: #f7fafc;
+  background: transparent;
   position: relative;
 }
 
 .admin-layout__main {
   flex: 1;
-  margin-left: 250px;
+  margin-left: 270px;
   min-height: 100vh;
-  padding: 2rem;
-  width: calc(100% - 250px);
+  padding: 2rem 2rem 2.5rem;
+  width: calc(100% - 270px);
 }
 
 .admin-layout__menu-toggle {
@@ -19,22 +19,23 @@
   top: 1rem;
   left: 1rem;
   z-index: 101;
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
   padding: 0.75rem;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: background 0.2s;
+  box-shadow: var(--shadow-sm);
+  transition: background 0.2s, transform 0.2s;
 }
 
 .admin-layout__menu-toggle:hover {
-  background: #f7fafc;
+  background: #eef3ff;
+  transform: translateY(-1px);
 }
 
 .admin-layout__menu-icon {
   font-size: 1.5rem;
-  color: #2d3748;
+  color: var(--text);
   line-height: 1;
 }
 
@@ -45,7 +46,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(7, 15, 34, 0.45);
   z-index: 99;
 }
 

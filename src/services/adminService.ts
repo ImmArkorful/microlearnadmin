@@ -1,6 +1,17 @@
 import axios from 'axios';
 import API_BASE_URL from '../config/api';
-import type { User, Lesson, Quiz, QuizAttempt, QuizResult, DashboardStats, PaginatedResponse } from '../types/admin';
+import type {
+  User,
+  Lesson,
+  Quiz,
+  QuizAttempt,
+  QuizResult,
+  DashboardStats,
+  PaginatedResponse,
+  QualityQueueResponse,
+  FunnelResponse,
+  AiObservabilityResponse,
+} from '../types/admin';
 
 const api = axios.create({
   baseURL: `${API_BASE_URL}/api/admin`,
@@ -35,6 +46,21 @@ export const adminService = {
   // Dashboard Stats
   async getStats(): Promise<DashboardStats> {
     const response = await api.get('/stats');
+    return response.data;
+  },
+
+  async getQualityQueue(limit = 25): Promise<QualityQueueResponse> {
+    const response = await api.get('/quality-queue', { params: { limit } });
+    return response.data;
+  },
+
+  async getFunnel(days: number | 'all' = 7): Promise<FunnelResponse> {
+    const response = await api.get('/funnel', { params: { days } });
+    return response.data;
+  },
+
+  async getAiObservability(days: number | 'all' = 7): Promise<AiObservabilityResponse> {
+    const response = await api.get('/ai-observability', { params: { days } });
     return response.data;
   },
 

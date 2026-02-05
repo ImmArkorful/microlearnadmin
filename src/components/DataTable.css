@@ -1,8 +1,9 @@
 .data-table {
-  background: white;
-  border-radius: 0.5rem;
+  background: var(--bg-elev);
+  border-radius: 0.9rem;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
 }
 
 .data-table__table {
@@ -11,17 +12,17 @@
 }
 
 .data-table__table thead {
-  background: #f7fafc;
+  background: #f6f8fd;
 }
 
 .data-table__table th {
   padding: 1rem;
   text-align: left;
   font-weight: 600;
-  color: #2d3748;
-  font-size: 0.875rem;
+  color: #34425f;
+  font-size: 0.8rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
 }
 
 .data-table__sortable {
@@ -33,7 +34,7 @@
 }
 
 .data-table__sortable:hover {
-  background: #edf2f7;
+  background: #edf3ff;
 }
 
 .data-table__sort-indicator {
@@ -41,7 +42,7 @@
   right: 0.5rem;
   top: 50%;
   transform: translateY(-50%);
-  color: #667eea;
+  color: var(--primary);
   font-weight: bold;
   font-size: 1rem;
 }
@@ -52,17 +53,17 @@
 }
 
 .data-table__table tbody tr {
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid #edf1f7;
   transition: background 0.2s;
 }
 
 .data-table__table tbody tr:hover {
-  background: #f7fafc;
+  background: #f9fbff;
 }
 
 .data-table__table td {
   padding: 1rem;
-  color: #4a5568;
+  color: #33405b;
   font-size: 0.875rem;
 }
 
@@ -78,8 +79,8 @@
   border: none;
   cursor: pointer;
   padding: 0.5rem;
-  border-radius: 0.25rem;
-  font-size: 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 1.05rem;
   transition: background 0.2s;
   display: flex;
   align-items: center;
@@ -87,11 +88,11 @@
 }
 
 .data-table__action:hover {
-  background: #edf2f7;
+  background: #ebf1fd;
 }
 
 .data-table__action--delete:hover {
-  background: #fed7d7;
+  background: #fee2e2;
 }
 
 .data-table__loading {
@@ -100,14 +101,14 @@
   align-items: center;
   justify-content: center;
   padding: 3rem;
-  color: #718096;
+  color: var(--text-muted);
 }
 
 .data-table__spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid #e2e8f0;
-  border-top-color: #667eea;
+  border: 4px solid #e5ebf7;
+  border-top-color: var(--primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 1rem;
@@ -122,7 +123,7 @@
 .data-table__empty {
   padding: 3rem;
   text-align: center;
-  color: #718096;
+  color: var(--text-muted);
 }
 
 .data-table__wrapper {

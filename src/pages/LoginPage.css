@@ -3,7 +3,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background:
+    radial-gradient(800px 500px at 0% 0%, rgba(45, 109, 246, 0.35), transparent 65%),
+    radial-gradient(700px 420px at 100% 100%, rgba(22, 163, 74, 0.25), transparent 60%),
+    linear-gradient(135deg, #0f1f43 0%, #132751 100%);
   padding: 2rem;
 }
 
@@ -13,29 +16,30 @@
 }
 
 .admin-login__card {
-  background: white;
-  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 1.1rem;
   padding: 2.5rem;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 24px 64px rgba(3, 12, 34, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .admin-login__title {
   font-size: 2rem;
-  font-weight: 700;
-  color: #1a202c;
+  font-weight: 800;
+  color: #16223b;
   margin: 0 0 0.5rem;
   text-align: center;
 }
 
 .admin-login__subtitle {
-  color: #718096;
+  color: #5b6882;
   text-align: center;
   margin: 0 0 2rem;
 }
 
 .admin-login__error {
-  background: #fed7d7;
-  color: #c53030;
+  background: #fee2e2;
+  color: #b4232a;
   padding: 0.75rem;
   border-radius: 0.5rem;
   margin-bottom: 1.5rem;
@@ -62,15 +66,16 @@
 
 .admin-login__field input {
   padding: 0.75rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
+  border: 1px solid #d9e1ef;
+  border-radius: 0.65rem;
   font-size: 1rem;
   transition: border-color 0.2s;
 }
 
 .admin-login__field input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(45, 109, 246, 0.14);
 }
 
 .admin-login__field input:disabled {
@@ -80,10 +85,10 @@
 
 .admin-login__button {
   padding: 0.875rem;
-  background: #667eea;
+  background: linear-gradient(135deg, var(--primary), #4d8bff);
   color: white;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 0.65rem;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -91,7 +96,7 @@
 }
 
 .admin-login__button:hover:not(:disabled) {
-  background: #5568d3;
+  background: linear-gradient(135deg, var(--primary-strong), #3f79e4);
 }
 
 .admin-login__button:disabled {

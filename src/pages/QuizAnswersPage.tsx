@@ -10,6 +10,7 @@ export function QuizAnswersPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
   const [totalPages, setTotalPages] = useState(1);
   const [userIdFilter, setUserIdFilter] = useState('');
   const [quizIdFilter, setQuizIdFilter] = useState('');
@@ -57,7 +58,7 @@ export function QuizAnswersPage() {
   // Load attempts when page, userIdFilter, quizIdFilter, or correctFilter changes
   useEffect(() => {
     loadAttempts();
-  }, [page, userIdFilter, quizIdFilter, correctFilter]);
+  }, [page, pageSize, userIdFilter, quizIdFilter, correctFilter]);
 
   const loadAttempts = async () => {
     try {
@@ -65,7 +66,7 @@ export function QuizAnswersPage() {
       setError('');
       const response = await adminService.getQuizAttempts({
         page,
-        limit: 20,
+        limit: pageSize,
         user_id: userIdFilter.trim() ? parseInt(userIdFilter.trim()) : undefined,
         quiz_id: quizIdFilter.trim() ? parseInt(quizIdFilter.trim()) : undefined,
         is_correct: correctFilter || undefined,
@@ -265,6 +266,20 @@ export function QuizAnswersPage() {
       </div>
 
       <div className="quiz-answers-page__pagination">
+        <label className="quiz-answers-page__rows">
+          Rows per page
+          <select
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value));
+              setPage(1);
+            }}
+          >
+            {[10, 20, 50, 100].map((size) => (
+              <option key={size} value={size}>{size}</option>
+            ))}
+          </select>
+        </label>
         <button
           onClick={() => setPage(p => Math.max(1, p - 1))}
           disabled={page === 1 || loading}

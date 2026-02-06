@@ -11,6 +11,7 @@ export function LessonsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
   const [totalPages, setTotalPages] = useState(1);
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('');
@@ -59,7 +60,7 @@ export function LessonsPage() {
   // Load lessons when page, search, or categoryFilter changes
   useEffect(() => {
     loadLessons();
-  }, [page, search, categoryFilter]);
+  }, [page, pageSize, search, categoryFilter]);
 
   const loadLessons = async () => {
     try {
@@ -67,7 +68,7 @@ export function LessonsPage() {
       setError('');
       const response = await adminService.getLessons({
         page,
-        limit: 20,
+        limit: pageSize,
         search: search.trim() || undefined,
         category: categoryFilter.trim() || undefined,
       });
@@ -274,6 +275,20 @@ export function LessonsPage() {
       )}
 
       <div className="lessons-page__pagination">
+        <label className="lessons-page__rows">
+          Rows per page
+          <select
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value));
+              setPage(1);
+            }}
+          >
+            {[10, 20, 50, 100].map((size) => (
+              <option key={size} value={size}>{size}</option>
+            ))}
+          </select>
+        </label>
         <button
           onClick={() => setPage(p => Math.max(1, p - 1))}
           disabled={page === 1 || loading}

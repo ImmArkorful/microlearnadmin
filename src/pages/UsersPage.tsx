@@ -11,6 +11,7 @@ export function UsersPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
   const [totalPages, setTotalPages] = useState(1);
   const [search, setSearch] = useState('');
   const [roleFilter, setRoleFilter] = useState('');
@@ -41,7 +42,7 @@ export function UsersPage() {
   // Load users when page, search, or roleFilter changes
   useEffect(() => {
     loadUsers();
-  }, [page, search, roleFilter]);
+  }, [page, pageSize, search, roleFilter]);
 
   const loadUsers = async () => {
     try {
@@ -49,7 +50,7 @@ export function UsersPage() {
       setError('');
       const response = await adminService.getUsers({
         page,
-        limit: 20,
+        limit: pageSize,
         search: search.trim() || undefined,
         role: roleFilter || undefined,
       });
@@ -268,6 +269,20 @@ export function UsersPage() {
       </div>
 
       <div className="users-page__pagination">
+        <label className="users-page__rows">
+          Rows per page
+          <select
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value));
+              setPage(1);
+            }}
+          >
+            {[10, 20, 50, 100].map((size) => (
+              <option key={size} value={size}>{size}</option>
+            ))}
+          </select>
+        </label>
         <button
           onClick={() => setPage(p => Math.max(1, p - 1))}
           disabled={page === 1 || loading}

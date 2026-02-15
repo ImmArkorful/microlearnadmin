@@ -156,6 +156,145 @@
   color: #22543d;
 }
 
+.users-page__status {
+  padding: 0.25rem 0.7rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: inline-flex;
+}
+
+.users-page__status--Completed {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.users-page__status--In-progress {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.users-page__status--Not-started {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.users-page__activity {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.users-page__activity small {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.users-page__journey-modal {
+  max-width: 760px;
+}
+
+.users-page__journey-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.users-page__journey-header h2 {
+  margin-bottom: 0.35rem;
+}
+
+.users-page__journey-header p {
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.users-page__journey-close {
+  border: none;
+  background: #f3f4f6;
+  border-radius: 0.6rem;
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+}
+
+.users-page__journey-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+  padding: 1rem;
+}
+
+.users-page__summary-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+
+.users-page__journey-card {
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.users-page__journey-card small {
+  display: block;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+}
+
+.users-page__journey-timeline ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.users-page__journey-timeline li {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 0.75rem;
+  align-items: start;
+  padding: 0.75rem;
+  border-radius: 0.85rem;
+  background: #f9fafb;
+}
+
+.users-page__journey-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 0.7rem;
+  background: #e0e7ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.users-page__journey-timeline strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.users-page__journey-timeline span {
+  display: block;
+  color: var(--text);
+}
+
+.users-page__journey-timeline small {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
 .users-page__pagination {
   display: flex;
   justify-content: center;

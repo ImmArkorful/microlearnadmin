@@ -1,4 +1,5 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AdminAuthProvider, useAdminAuth } from './context/AdminAuthContext';
 import { AdminLayout } from './components/AdminLayout';
 import { LoginPage } from './pages/LoginPage';
@@ -8,6 +9,7 @@ import { LessonsPage } from './pages/LessonsPage';
 import { QuizzesPage } from './pages/QuizzesPage';
 import { QuizAnswersPage } from './pages/QuizAnswersPage';
 import { TopicGenerationPage } from './pages/TopicGenerationPage';
+import { adminAnalytics } from './services/adminAnalytics';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading } = useAdminAuth();
@@ -24,6 +26,14 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 }
 
 function AppRoutes() {
+  const location = useLocation();
+
+  useEffect(() => {
+    adminAnalytics.track('admin_page_viewed', {
+      page_path: location.pathname,
+    });
+  }, [location.pathname]);
+
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />

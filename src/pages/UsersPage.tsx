@@ -3,7 +3,7 @@ import { adminService } from '../services/adminService';
 import { DataTable } from '../components/DataTable';
 import { UserForm } from '../components/UserForm';
 import { ConfirmDialog } from '../components/ConfirmDialog';
-import type { User } from '../types/admin';
+import type { User, UserJourney } from '../types/admin';
 import './UsersPage.css';
 
 export function UsersPage() {
@@ -20,6 +20,10 @@ export function UsersPage() {
   const [deleteUser, setDeleteUser] = useState<User | null>(null);
   const [selectedUsers, setSelectedUsers] = useState<Set<number>>(new Set());
   const [formLoading, setFormLoading] = useState(false);
+  const [journeyUser, setJourneyUser] = useState<User | null>(null);
+  const [journeyData, setJourneyData] = useState<UserJourney | null>(null);
+  const [journeyLoading, setJourneyLoading] = useState(false);
+  const [journeyError, setJourneyError] = useState('');
   const searchDebounceRef = useRef<NodeJS.Timeout | null>(null);
 
   // Debounced search effect
@@ -139,6 +143,63 @@ export function UsersPage() {
     }
   };
 
+  const openJourney = async (user: User) => {
+    try {
+      setJourneyUser(user);
+      setJourneyLoading(true);
+      setJourneyError('');
+      const data = await adminService.getUserJourney(user.id, { limit: 50, offset: 0 });
+      setJourneyData(data);
+    } catch (err: any) {
+      setJourneyError(err.message || 'Failed to load user journey');
+    } finally {
+      setJourneyLoading(false);
+    }
+  };
+
+  const closeJourney = () => {
+    setJourneyUser(null);
+    setJourneyData(null);
+    setJourneyError('');
+    setJourneyLoading(false);
+  };
+
+  const formatDate = (value?: string | null) => {
+    if (!value) return '—';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '—';
+    return date.toLocaleDateString();
+  };
+
+  const formatDateTime = (value?: string | null) => {
+    if (!value) return '—';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '—';
+    return date.toLocaleString();
+  };
+
+  const formatOnboardingStatus = (user: User) => {
+    if (user.onboarding_completed_at) return 'Completed';
+    if (user.last_home_at || user.last_activity_at) return 'In progress';
+    return 'Not started';
+  };
+
+  const formatActivityLabel = (type?: string | null) => {
+    if (!type) return '—';
+    const labels: Record<string, string> = {
+      onboarding_completed: 'Onboarding completed',
+      home_viewed: 'Home viewed',
+      lesson_started: 'Lesson started',
+      lesson_completed: 'Lesson completed',
+      lesson_reading: 'Lesson reading',
+      topic_created: 'Topic created',
+      topic_saved: 'Topic saved',
+      topic_liked: 'Topic liked',
+      quiz_completed: 'Quiz completed',
+    };
+    return labels[type] || type.replace(/_/g, ' ');
+  };
+
   const columns = [
     { key: 'id', label: 'ID', sortable: true },
     { key: 'email', label: 'Email', sortable: true },
@@ -167,6 +228,38 @@ export function UsersPage() {
       label: 'Quiz Attempts',
       sortable: true,
       render: (value: number) => value || 0,
+    },
+    {
+      key: 'onboarding_completed_at',
+      label: 'Onboarding',
+      sortable: true,
+      render: (_value: string, row: User) => (
+        <span className={`users-page__status users-page__status--${formatOnboardingStatus(row).replace(' ', '-')}`}>
+          {formatOnboardingStatus(row)}
+        </span>
+      ),
+    },
+    {
+      key: 'last_activity_at',
+      label: 'Last Activity',
+      sortable: true,
+      render: (_value: string, row: User) => (
+        <div className="users-page__activity">
+          <span>{formatActivityLabel(row.last_activity_type)}</span>
+          <small>{formatDate(row.last_activity_at)}</small>
+        </div>
+      ),
+    },
+    {
+      key: 'last_lesson_topic',
+      label: 'Last Lesson',
+      sortable: false,
+      render: (value: string, row: User) => (
+        <div className="users-page__activity">
+          <span>{value || '—'}</span>
+          <small>{formatDate(row.last_lesson_at)}</small>
+        </div>
+      ),
     },
   ];
 
@@ -264,6 +357,13 @@ export function UsersPage() {
           ]}
           onEdit={handleEdit}
           onDelete={handleDelete}
+          actions={[
+            {
+              label: 'Journey',
+              onClick: (row) => openJourney(row as User),
+              className: 'data-table__action--view',
+            },
+          ]}
           loading={loading}
         />
       </div>
@@ -307,6 +407,84 @@ export function UsersPage() {
         confirmText="Delete"
         variant="danger"
       />
+
+      {journeyUser && (
+        <div className="users-page__modal">
+          <div className="users-page__modal-content users-page__journey-modal">
+            <div className="users-page__journey-header">
+              <div>
+                <h2>User Journey</h2>
+                <p>{journeyUser.email}</p>
+              </div>
+              <button className="users-page__journey-close" onClick={closeJourney}>✕</button>
+            </div>
+
+            {journeyLoading && <p>Loading journey...</p>}
+            {journeyError && <p className="users-page__error">{journeyError}</p>}
+
+            {journeyData && !journeyLoading && (
+              <>
+                <div className="users-page__journey-summary">
+                  <div>
+                    <span className="users-page__summary-label">Onboarding</span>
+                    <span>{journeyData.onboarding?.onboarding_completed_at ? 'Completed' : 'Not completed'}</span>
+                  </div>
+                  <div>
+                    <span className="users-page__summary-label">First Win</span>
+                    <span>{journeyData.onboarding?.first_win_completed ? 'Completed' : 'No'}</span>
+                  </div>
+                  <div>
+                    <span className="users-page__summary-label">First Lesson</span>
+                    <span>{formatDateTime(journeyData.milestones.first_lesson_at)}</span>
+                  </div>
+                  <div>
+                    <span className="users-page__summary-label">First Quiz</span>
+                    <span>{formatDateTime(journeyData.milestones.first_quiz_at)}</span>
+                  </div>
+                  <div>
+                    <span className="users-page__summary-label">Last Home View</span>
+                    <span>{formatDateTime(journeyData.milestones.last_home_at)}</span>
+                  </div>
+                  <div>
+                    <span className="users-page__summary-label">Last Activity</span>
+                    <span>{formatDateTime(journeyData.milestones.last_activity_at)}</span>
+                  </div>
+                </div>
+
+                {journeyData.milestones.last_lesson?.topic && (
+                  <div className="users-page__journey-card">
+                    <span className="users-page__summary-label">Last Lesson Clicked</span>
+                    <strong>{journeyData.milestones.last_lesson.topic}</strong>
+                    <small>{journeyData.milestones.last_lesson.category || 'Uncategorized'} · {formatDateTime(journeyData.milestones.last_lesson.created_at)}</small>
+                  </div>
+                )}
+
+                <div className="users-page__journey-timeline">
+                  <h3>Recent Activity</h3>
+                  {journeyData.activities.length === 0 ? (
+                    <p>No activity yet.</p>
+                  ) : (
+                    <ul>
+                      {journeyData.activities.map((activity) => (
+                        <li key={activity.id}>
+                          <div className="users-page__journey-icon">{activity.icon || '•'}</div>
+                          <div>
+                            <strong>{activity.description || activity.type}</strong>
+                            {activity.title && activity.title !== 'Unknown Activity' ? (
+                              <span>{activity.title}</span>
+                            ) : null}
+                            <small>{formatDateTime(activity.createdAt)}</small>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

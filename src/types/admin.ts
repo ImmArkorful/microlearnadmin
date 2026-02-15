@@ -6,6 +6,53 @@ export interface User {
   lessons_count?: number;
   quiz_attempts_count?: number;
   correct_attempts_count?: number;
+  first_win_completed?: boolean;
+  onboarding_completed_at?: string | null;
+  last_activity_type?: string | null;
+  last_activity_at?: string | null;
+  last_lesson_topic?: string | null;
+  last_lesson_at?: string | null;
+  first_lesson_at?: string | null;
+  first_quiz_at?: string | null;
+  last_home_at?: string | null;
+}
+
+export interface UserJourneyActivity {
+  id: number;
+  type: string;
+  title: string;
+  category?: string;
+  data?: any;
+  createdAt: string;
+  icon?: string;
+  description?: string;
+}
+
+export interface UserJourney {
+  user: User;
+  onboarding: {
+    learning_goal?: string | null;
+    experience_level?: string | null;
+    interests?: any;
+    weekly_target_sessions?: number | null;
+    first_win_completed?: boolean | null;
+    onboarding_completed_at?: string | null;
+    created_at?: string | null;
+    updated_at?: string | null;
+  } | null;
+  milestones: {
+    first_home_at?: string | null;
+    last_home_at?: string | null;
+    first_lesson_at?: string | null;
+    first_quiz_at?: string | null;
+    last_activity_at?: string | null;
+    last_lesson?: {
+      created_at?: string | null;
+      topic?: string | null;
+      category?: string | null;
+    } | null;
+  };
+  activities: UserJourneyActivity[];
 }
 
 export interface Lesson {

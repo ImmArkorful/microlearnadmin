@@ -4,6 +4,7 @@ import { DataTable } from '../components/DataTable';
 import { LessonForm } from '../components/LessonForm';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import type { Lesson } from '../types/admin';
+import { adminAnalytics } from '../services/adminAnalytics';
 import './LessonsPage.css';
 
 export function LessonsPage() {
@@ -100,6 +101,10 @@ export function LessonsPage() {
 
     try {
       await adminService.deleteLesson(deleteLesson.id);
+      adminAnalytics.track('admin_lesson_deleted', {
+        lesson_id: deleteLesson.id,
+        category: deleteLesson.category,
+      });
       setDeleteLesson(null);
       loadLessons();
     } catch (err: any) {
@@ -111,7 +116,11 @@ export function LessonsPage() {
     if (selectedLessons.size === 0) return;
 
     try {
+      const deletedCount = selectedLessons.size;
       await adminService.batchDeleteLessons(Array.from(selectedLessons));
+      adminAnalytics.track('admin_batch_lessons_deleted', {
+        deleted_count: deletedCount,
+      });
       setSelectedLessons(new Set());
       loadLessons();
     } catch (err: any) {
@@ -144,6 +153,10 @@ export function LessonsPage() {
         await adminService.updateLesson(editingLesson.id, data);
       } else {
         await adminService.createLesson(data);
+        adminAnalytics.track('admin_lesson_created', {
+          category: data.category,
+          topic_length: data.topic.length,
+        });
       }
       setShowForm(false);
       setEditingLesson(null);

@@ -4,6 +4,7 @@ import { DataTable } from '../components/DataTable';
 import { QuizForm } from '../components/QuizForm';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import type { Quiz } from '../types/admin';
+import { adminAnalytics } from '../services/adminAnalytics';
 import './QuizzesPage.css';
 
 export function QuizzesPage() {
@@ -100,7 +101,14 @@ export function QuizzesPage() {
 
   const handleToggleActive = async (quiz: Quiz) => {
     try {
-      await adminService.updateQuiz(quiz.id, { is_active: !quiz.is_active });
+      const nextIsActive = !quiz.is_active;
+      await adminService.updateQuiz(quiz.id, { is_active: nextIsActive });
+      adminAnalytics.track('admin_quiz_status_toggled', {
+        quiz_id: quiz.id,
+        previous_is_active: quiz.is_active,
+        next_is_active: nextIsActive,
+        category: quiz.category,
+      });
       loadQuizzes();
     } catch (err: any) {
       setError(err.message || 'Failed to update quiz');

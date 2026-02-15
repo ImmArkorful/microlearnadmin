@@ -11,6 +11,7 @@ import type {
   QualityQueueResponse,
   FunnelResponse,
   AiObservabilityResponse,
+  UserJourney,
 } from '../types/admin';
 
 const api = axios.create({
@@ -91,6 +92,11 @@ export const adminService = {
 
   async getUserQuizAttempts(userId: number): Promise<QuizAttempt[]> {
     const response = await api.get(`/users/${userId}/quiz-attempts`);
+    return response.data;
+  },
+
+  async getUserJourney(userId: number, params?: { limit?: number; offset?: number }): Promise<UserJourney> {
+    const response = await api.get(`/users/${userId}/journey`, { params });
     return response.data;
   },
 

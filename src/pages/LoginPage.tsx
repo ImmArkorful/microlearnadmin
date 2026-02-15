@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '../context/AdminAuthContext';
+import { adminAnalytics } from '../services/adminAnalytics';
 import './LoginPage.css';
 
 export const LoginPage = () => {
@@ -15,11 +16,20 @@ export const LoginPage = () => {
     e.preventDefault();
     setError('');
     setLoading(true);
+    adminAnalytics.track('admin_login_attempted', {
+      email_domain: email.includes('@') ? email.split('@')[1] : 'unknown',
+    });
 
     try {
       await login(email, password);
+      adminAnalytics.track('admin_login_success', {
+        email_domain: email.includes('@') ? email.split('@')[1] : 'unknown',
+      });
       navigate('/dashboard');
     } catch (err: any) {
+      adminAnalytics.track('admin_login_failed', {
+        error_message: err?.message || 'unknown_error',
+      });
       setError(err.message || 'Login failed. Please check your credentials.');
     } finally {
       setLoading(false);
